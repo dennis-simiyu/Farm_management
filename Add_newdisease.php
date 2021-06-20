@@ -10,14 +10,26 @@ error_reporting(E_ALL);
 	$timestamp = time();
 
 	//CREATE-Button
-	if (isset($_POST['create'])){
+	if (isset($_POST['Add_disease'])){
+		$disease_name = sanitize($db_link, $_POST['disease_name']);
+		$disease_type = sanitize($db_link, $_POST['disease_type']);
+		$disease_farm = sanitize($db_link, $_POST['disease_farm']);
+		$disease_crop = sanitie($db_link, $_POST['disease_crop']);
+		$disease_date = sanitize($db_link, $_POST['disease_date']);
+		$disease_description = sanitize($db_link,$_POST['disease_description']);
 
+	  $sql_insertDisease = "INSERT INTO disease(d_name, d_type, d_farm,d_crop,d_date,d_description)
+							VALUES('$disease_name', '$disease_type', '$disease_farm', '$disease_crop', '$disease_date','$disease_description')";
+	
+	$query_insertDisease = mysqli_query($db_link, $sql_insertDisease);
+	checkSQL($db_link, $query_insertDisease);
 		
 	}
 
 	
 
 	//Build new EMPL_NO
+	$newEmplNo = buildEmplNo($db_link);
 ?>
 
 <!DOCTYPE HTML>
@@ -42,10 +54,11 @@ error_reporting(E_ALL);
             <a href="Add_newpest.php">Pests<a>
             <a href="new_farm.php">Farm</a>
             <a href="new_crop.php">Crops</a>
+            
 		</div>
 
 		<!-- PAGE HEADING -->
-		<p class="heading">New Farm Pest</p>
+		<p class="heading">Add Pest</p>
 
 		<!-- CONTENT -->
 		<div class="content_left">
@@ -53,57 +66,48 @@ error_reporting(E_ALL);
 
 				<table id ="tb_fields" style="max-width:1000px;">
 					<tr>
-						<td>Type:</td>
-                        <td><input type="text" name="act_type" placeholder="eg planting" tabindex=1 /></td>
+						<td>Name:</td>
+                        <td><input type="text" name="disease_name" placeholder="" tabindex=1 /></td>
                      </tr>
                             <tr>
-						<td>Cost:</td>
-                        <td><input type="number" name="act_cost" placeholder="ksh" tabindex=2 /></td>
+						<td>Type:</td>
+                        <td><input type="text" name="disease_type" placeholder="" tabindex=2 /></td>
                     </tr>
 					
 					<tr>
-						<td>Pest:</td>
+						<td>crop:</td>
 						<td>
-                            <select name="pest" size="2" tabindex="3">
+                            <select name="disease_crop" size="2" tabindex="3">
                                 <option value="" ></option>
                          </select>
                         </td>
                       </tr>
                       <tr>
-						<td>Disease:</td>
+						<td>farm:</td>
 						<td>
-                            <select name="Disease" size="1" tabindex="4">
+                            <select name="disease_farm" size="1" tabindex="4">
                                 <option value=""></option>
                          </select>
                         </td>
 					</tr>
 					<tr>
-						<td>Machinery:</td>
-						<td>
-                        <select name="machinery" size="1">
-                        <option value="1">Machinery</option>
-                        </select>
-                        </td>
-                   </tr>
-                   <tr>
-                       <td> Chemicals </td>
-                       <td>
-                           <input name="chemicals" type="text" placeholder="eg ..Actelic super" />
-                      </td>
-					<tr>
 						<td>Date:</td>
-						<td><input type="text" id="datepicker2" name="act_date" value="<?PHP echo date("d.m.Y", $timestamp) ?>" >
+						<td><input type="text" id="datepicker2" name="disease_date" value="<?PHP echo date("d.m.Y", $timestamp) ?>" >
                     </td>
 					</tr>
 					<tr>
 						<td colspan="4" class="center">
-							<input type="submit" name="Addactivity" value="Add Activity" />
+							<input type="submit" name="Add_disease" value="Add Disease" />
 						</td>
 						<td></td>
 						<td></td>
 					</tr>
 				</table>
 			</form>
-		</div>
+        </div>
+        <div class="content_right">
+        </div>
+        <div class="footer">
+        </div>
 	</body>
 </html>

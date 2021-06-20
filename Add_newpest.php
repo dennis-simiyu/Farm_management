@@ -9,9 +9,22 @@ error_reporting(E_ALL);
 	//Generate timestamp
 	$timestamp = time();
 
-	//CREATE-Button
-	if (isset($_POST['create'])){
+	//Get the value from the form
+	if (isset($_POST['Add_pest'])){
+	  $pest_name = sanitize($db_link, $_POST['pest_name']);
+	  $pest_type = sanitize($db_link, $_POST['pest_type']);
+	  $pest_farm = sanitize($db_link, $_POST['pest_farm']);
+	  $pest_crop = sanitize($db_link, $_POST['pest_crop']);
+	  $pest_date = sanitize($db_link, $_POST['pest_date']);
+	  $pest_description = sanitize($db_link, $_POST['pest_description']);
 
+	  //insert the values into the database
+
+	  $sql_insertPest = "INSERT INTO pests(pest_name, pest_type, farm, crop, dates,pest_description)
+						 VALUES('$pest_name', '$pest_type', '$pest_farm', '$pest_crop','$pest_date','$pest_description')";
+						 
+	  $query_insertPest = mysqli_query($db_link, $sql_insertPest);
+	  checkSQL($db_link, $query_insertPest);
 		
 	}
 
@@ -47,7 +60,7 @@ error_reporting(E_ALL);
 		</div>
 
 		<!-- PAGE HEADING -->
-		<p class="heading">New Farm Activity</p>
+		<p class="heading">Add Pest</p>
 
 		<!-- CONTENT -->
 		<div class="content_left">
@@ -55,51 +68,38 @@ error_reporting(E_ALL);
 
 				<table id ="tb_fields" style="max-width:1000px;">
 					<tr>
-						<td>Type:</td>
-                        <td><input type="text" name="act_type" placeholder="eg planting" tabindex=1 /></td>
+						<td>Name:</td>
+                        <td><input type="text" name="pest_name" placeholder="eg certerpilers" tabindex=1 /></td>
                      </tr>
                             <tr>
-						<td>Cost:</td>
-                        <td><input type="number" name="act_cost" placeholder="ksh" tabindex=2 /></td>
+						<td>Type:</td>
+                        <td><input type="text" name="pest_type" placeholder="" tabindex=2 /></td>
                     </tr>
 					
 					<tr>
-						<td>Pest:</td>
+						<td>crop:</td>
 						<td>
-                            <select name="pest" size="2" tabindex="3">
+                            <select name="pest_crop" size="2" tabindex="3">
                                 <option value="" ></option>
                          </select>
                         </td>
                       </tr>
                       <tr>
-						<td>Disease:</td>
+						<td>Farm:</td>
 						<td>
-                            <select name="Disease" size="1" tabindex="4">
+                            <select name="pest_farm" size="1" tabindex="4">
                                 <option value=""></option>
                          </select>
                         </td>
 					</tr>
 					<tr>
-						<td>Machinery:</td>
-						<td>
-                        <select name="machinery" size="1">
-                        <option value="1">Machinery</option>
-                        </select>
-                        </td>
-                   </tr>
-                   <tr>
-                       <td> Chemicals </td>
-                       <td>
-                           <input name="chemicals" type="text" placeholder="eg ..Actelic super" />
-                      </td>
-					<tr>
 						<td>Date:</td>
-						<td><input type="text" id="datepicker2" name="act_date" value="<?PHP echo date("d.m.Y", $timestamp) ?>" >
+						<td><input type="text" id="datepicker2" name="pest_date" value="<?PHP echo date("d.m.Y", $timestamp) ?>" >
                     </td>
 					</tr>
 					<tr>
 						<td colspan="4" class="center">
-							<input type="submit" name="Addactivity" value="Add Activity" />
+							<input type="submit" name="Add_pest" value="Add Pest" />
 						</td>
 						<td></td>
 						<td></td>
